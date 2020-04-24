@@ -1,97 +1,61 @@
-// import { login, logout, getInfo } from '@/api/user'
-// import { getToken, setToken, removeToken } from '@/utils/auth'
-// import { resetRouter } from '@/router'
+import api from '@/api/user'
+const state = {
+  token: '',
+  username: '',
+  avatar: '',
+  introduce: '',
+  roles: []
+}
 
-// const getDefaultState = () => {
-//   return {
-//     token: getToken(),
-//     name: '',
-//     avatar: ''
-//   }
-// }
+const mutations = {
+  SET_TOKEN: (state, token) => {
+    state.token = token;
+  },
+  SET_USERNAME: (state, username) => {
+    state.username = username;
+  },
+  SET_INTRODUCTION: (state, introduce) => {
+    state.introduce = introduce
+  },
+  SET_AVATAR: (state, avatar) => {
+    state.avatar = avatar
+  },
+  SET_ROLES: (state, roles) => {
+    state.roles = roles
+  }
+}
 
-// const state = getDefaultState()
+const actions = {
+  login: ({ commit }, userInfo) => {
+    const { username, password } = userInfo;
+    return api.login({ username: username.trim(), password }).then(({ data }) => {
+      if (data.code === 0) {
+        console.log(data)
+        localStorage.token = data.data.token;
+        commit('SET_TOKEN', data.data.token);
+      }
+      return data;
+    });
+  },
+  getUserInfo: ({ commit, state }) => {
+    return api.findOne().then(({ data }) => {
+      if (data.code === 0) {
+        console.log(data)
+        commit('SET_USERNAME', data.data.username);
+        commit('SET_AVATAR', data.data.avatar);
+        commit('SET_INTRODUCTION', data.data.introduce);
+      }
+      return data;
+    })
+  },
+  loginOut: ({ commit }) => {
+    commit('SET_TOKEN', '')
+  }
+}
 
-// const mutations = {
-//   RESET_STATE: (state) => {
-//     Object.assign(state, getDefaultState())
-//   },
-//   SET_TOKEN: (state, token) => {
-//     state.token = token
-//   },
-//   SET_NAME: (state, name) => {
-//     state.name = name
-//   },
-//   SET_AVATAR: (state, avatar) => {
-//     state.avatar = avatar
-//   }
-// }
-
-// const actions = {
-//   // user login
-//   login({ commit }, userInfo) {
-//     const { username, password } = userInfo
-//     return new Promise((resolve, reject) => {
-//       login({ username: username.trim(), password: password }).then(response => {
-//         const { data } = response
-//         commit('SET_TOKEN', data.token)
-//         setToken(data.token)
-//         resolve()
-//       }).catch(error => {
-//         reject(error)
-//       })
-//     })
-//   },
-
-//   // get user info
-//   getInfo({ commit, state }) {
-//     return new Promise((resolve, reject) => {
-//       getInfo(state.token).then(response => {
-//         const { data } = response
-
-//         if (!data) {
-//           reject('Verification failed, please Login again.')
-//         }
-
-//         const { name, avatar } = data
-
-//         commit('SET_NAME', name)
-//         commit('SET_AVATAR', avatar)
-//         resolve(data)
-//       }).catch(error => {
-//         reject(error)
-//       })
-//     })
-//   },
-
-//   // user logout
-//   logout({ commit, state }) {
-//     return new Promise((resolve, reject) => {
-//       logout(state.token).then(() => {
-//         removeToken() // must remove  token  first
-//         resetRouter()
-//         commit('RESET_STATE')
-//         resolve()
-//       }).catch(error => {
-//         reject(error)
-//       })
-//     })
-//   },
-
-//   // remove token
-//   resetToken({ commit }) {
-//     return new Promise(resolve => {
-//       removeToken() // must remove  token  first
-//       commit('RESET_STATE')
-//       resolve()
-//     })
-//   }
-// }
-
-// export default {
-//   namespaced: true,
-//   state,
-//   mutations,
-//   actions
-// }
-
+export default {
+  namespaced: true, // 当模块被注册后，它的所有 getter、action 及 mutation 都会自动根据模块注册的路径调整命名。
+  state,
+  mutations,
+  actions
+}
