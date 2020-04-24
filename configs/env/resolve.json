@@ -1,0 +1,12 @@
+{
+  "home": "必须通过cli在package.json所在目录运行cli",
+  "src": "src",
+  "entry": "pages",
+  "module": "modules",
+  "lib": "libs",
+  "dist": "public",
+  "static": "static",
+  "vendor": "vendors",
+  "nodeModules": "node_modules"
+}
+
