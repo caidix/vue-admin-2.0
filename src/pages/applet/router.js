@@ -33,13 +33,13 @@ import Layout from '@/layout'
 export const constantRoutes = [
   {
     path: '/login',
-    component: () => import('@/views/login/index'),
+    component: () => import('@/modules/login'),
     hidden: true
   },
 
   {
     path: '/404',
-    component: () => import('@/views/404'),
+    component: () => import('@/modules/404'),
     hidden: true
   },
 
@@ -50,7 +50,7 @@ export const constantRoutes = [
     children: [{
       path: 'dashboard',
       name: 'Dashboard',
-      component: () => import('@/pages/blog/Home'),
+      component: () => import('@/pages/applet/Home'),
       meta: { title: 'Dashboard', icon: 'el-icon-platform-eleme' }
     }]
   },
@@ -61,7 +61,7 @@ export const constantRoutes = [
     children: [{
       path: 'dashboard',
       name: 'Dashboard',
-      component: () => import('@/pages/blog/About'),
+      component: () => import('@/pages/applet/About'),
       meta: { title: 'Dashboard', icon: 'el-icon-platform-eleme' }
     }]
   },

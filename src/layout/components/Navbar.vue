@@ -1,40 +1,45 @@
 <template>
-  <div class="navbar">
-    <hamburger
-      :is-active="sidebar.opened"
-      class="hamburger-container"
-      @toggleClick="toggleSideBar"
-    />
+  <div>
+    <div class="navbar project-pane">
+      <ul>
+        <li @click="handleChangeUrl('index')">博客</li>
+        <li @click="handleChangeUrl('applet')">小程序</li>
+      </ul>
 
-    <breadcrumb class="breadcrumb-container" />
-
-    <div class="right-menu">
-      <ScreenFull class="screen-full" />
-      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
-        <div class="avatar-wrapper">
-          <div class="user">{{username || '未登入'}}</div>
-          <i class="el-icon-caret-bottom" />
-        </div>
-        <el-dropdown-menu slot="dropdown">
-          <template v-if="username">
-            <router-link to="/">
-              <el-dropdown-item>主页</el-dropdown-item>
-            </router-link>
-            <a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">
-              <el-dropdown-item>Github</el-dropdown-item>
-            </a>
-            <el-dropdown-item divided @click.native="logout">
-              <span style="display:block;">登出</span>
+      <div class="right-menu">
+        <ScreenFull class="screen-full" />
+        <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
+          <div class="avatar-wrapper">
+            <div class="user">{{username || '未登入'}}</div>
+            <i class="el-icon-caret-bottom" />
+          </div>
+          <el-dropdown-menu slot="dropdown">
+            <template v-if="username">
+              <router-link to="/">
+                <el-dropdown-item>主页</el-dropdown-item>
+              </router-link>
+              <a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">
+                <el-dropdown-item>Github</el-dropdown-item>
+              </a>
+              <el-dropdown-item divided @click.native="logout">
+                <span style="display:block;">登出</span>
+              </el-dropdown-item>
+            </template>
+            <el-dropdown-item @click.native="login">
+              <span style="display:block;">登陆</span>
             </el-dropdown-item>
-          </template>
-          <el-dropdown-item @click.native="login">
-            <span style="display:block;">登陆</span>
-            <a href="/ceshi2.html">
-              <el-dropdown-item>Github</el-dropdown-item>
-            </a>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
+    </div>
+    <div class="navbar">
+      <hamburger
+        :is-active="sidebar.opened"
+        class="hamburger-container"
+        @toggleClick="toggleSideBar"
+      />
+
+      <breadcrumb class="breadcrumb-container" />
     </div>
   </div>
 </template>
@@ -67,6 +72,13 @@ export default {
         this.$store.dispatch("user/loginOut");
         this.$router.push("/login");
       });
+    },
+    handleChangeUrl(url) {
+      if (process.env.NODE_ENV === "development") {
+        window.location.href = `${url}`;
+      } else {
+        window.location.href = `${url}.html`;
+      }
     }
   },
   login() {
@@ -83,6 +95,28 @@ export default {
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
+  &.project-pane {
+    background: #ffb3a7;
+    ul {
+      display: inline-block;
+      li {
+        font-size: 18px;
+        font-weight: 600;
+        color: #fff;
+        cursor: pointer;
+        margin: 0 10px;
+        padding: 0 10px;
+        text-decoration: none;
+        display: inline-block;
+        transition: color 0.3s;
+        &:hover {
+          background-image: linear-gradient(90deg, red, blue);
+          background-clip: text;
+          color: transparent;
+        }
+      }
+    }
+  }
   .hamburger-container {
     line-height: 46px;
     height: 100%;
