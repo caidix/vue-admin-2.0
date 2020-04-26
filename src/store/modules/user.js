@@ -1,4 +1,5 @@
 import api from '@/api/user'
+import { setToken } from '@/utils/auth'
 const state = {
   token: '',
   username: '',
@@ -31,8 +32,8 @@ const actions = {
     return api.login({ username: username.trim(), password }).then(({ data }) => {
       if (data.code === 0) {
         console.log(data)
-        localStorage.token = data.data.token;
         commit('SET_TOKEN', data.data.token);
+        setToken(data.data.token)
       }
       return data;
     });
