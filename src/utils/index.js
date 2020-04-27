@@ -1,13 +1,4 @@
-/**
- * Created by PanJiaChen on 16/11/18.
- */
 
-/**
- * Parse the time to string
- * @param {(Object|string|number)} time
- * @param {string} cFormat
- * @returns {string | null}
- */
 export function parseTime(time, cFormat) {
   if (arguments.length === 0) {
     return null
@@ -104,4 +95,8 @@ export function param2Obj(url) {
       .replace(/\+/g, ' ') +
     '"}'
   )
+}
+
+export function isNil(value) {
+  return value == null
 }
