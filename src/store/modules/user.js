@@ -1,5 +1,5 @@
 import api from '@/api/user'
-import { setToken } from '@/utils/auth'
+import { setToken, removeToken } from '@/utils/auth'
 const state = {
   token: '',
   username: '',
@@ -50,6 +50,7 @@ const actions = {
     })
   },
   loginOut: ({ commit }) => {
+    removeToken();
     commit('SET_TOKEN', '')
   }
 }

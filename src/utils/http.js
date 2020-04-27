@@ -1,6 +1,7 @@
 import axios from "axios";
-import { Message, Loading } from "element-ui";
+import { Message } from "element-ui";
 import store from "@/store";
+import { getToken } from '@/utils/auth'
 import Vue from "vue";
 const errorMsg = (message) => {
   return Message({
@@ -16,13 +17,9 @@ const http = axios.create({
   withCredentials: true,
   header: { "Access-Control-Allow-Origin": "*" },
 });
-let loadingInstance;
 http.interceptors.request.use(
   (config) => {
-    if (store.getters.token) {
-      config.headers["Authorization"] = store.getters.token;
-    }
-    loadingInstance = Loading.service();
+    config.headers["Authorization"] = getToken();
     return config;
   },
   (error) => {
@@ -33,15 +30,9 @@ http.interceptors.request.use(
 http.interceptors.response.use(
   (res) => {
     // 根据业务修改
-    if (loadingInstance) {
-      loadingInstance.close();
-    }
     return res;
   },
   (error) => {
-    if (loadingInstance) {
-      loadingInstance.close();
-    }
     let { message } = error;
     console.log("err" + error); // for debug
     if (message == "Network Error") {

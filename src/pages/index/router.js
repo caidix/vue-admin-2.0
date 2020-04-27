@@ -46,24 +46,25 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/index',
     children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
+      path: 'index',
+      name: '主页',
       component: () => import('@/pages/index/Home'),
-      meta: { title: 'Dashboard', icon: 'el-icon-platform-eleme' }
+      meta: { title: '主页', icon: 'el-icon-s-home' }
     }]
   },
   {
-    path: '/about',
+    path: '/category',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/index',
     children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
+      path: 'index',
+      name: 'categoryList',
       component: () => import('@/pages/index/About'),
-      meta: { title: 'Dashboard', icon: 'el-icon-platform-eleme' }
-    }]
+      meta: { title: '分类列表', icon: 'el-icon-tickets' }
+    }],
+    meta: { title: '分类管理', icon: 'el-icon-document-copy' },
   },
 
   // 404 page must be placed at the end !!!

@@ -11,7 +11,7 @@ import App from './index'
 import store from '@/store'
 import router from './router'
 
-// import '@/permission' // permission control
+import './permission' // permission control
 
 Vue.use(ElementUI)
 
