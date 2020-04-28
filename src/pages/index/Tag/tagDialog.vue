@@ -34,7 +34,7 @@
 
 
 <script>
-import api from "@/api/tag.js";
+import api from "api/blog/tag";
 import { Message } from "element-ui";
 export default {
   props: {

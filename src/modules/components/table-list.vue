@@ -54,10 +54,18 @@
         isHtml,
         sortable,
         sep,
+        width,
         ...arg
       } in configs"
     >
-      <el-table-column :key="prop" v-if="!isExpand">
+      <el-table-column
+        v-bind="arg"
+        :label="label"
+        :sortable="sortable"
+        :key="prop"
+        :width="width"
+        v-if="!isExpand"
+      >
         <template slot-scope="{ row }">
           <component
             v-if="component"
@@ -128,7 +136,7 @@ export default {
     size: {
       //medium / small / mini
       type: String,
-      default: 'small',
+      default: '',
     },
     selection: {
       // 添加一个el-table-column，设type属性为selection，建立多选，emit方法回调

@@ -4,34 +4,65 @@
       slot="header"
       :btnText="'创建'"
       :configs="configs"
+      @submit="createTag"
     ></edit-component>
-    <el-button>按钮</el-button>
+    <list-component
+      :configs="tagConfig"
+      :datas="datas"
+      border
+      v-loading="isLoading"
+    >
+      <el-table-column fixed="right" label="操作">
+        <template slot-scope="scope">
+          <el-button type="primary" size="small" @click="handleEdit(scope.row)"
+            >编辑</el-button
+          >
+          <el-button
+            slot="reference"
+            @click="delTag(scope.row)"
+            type="danger"
+            size="small"
+            >删除</el-button
+          >
+        </template>
+      </el-table-column>
+    </list-component>
+    <div slot="footer" style="text-align:center">
+      <el-pagination
+        @size-change="handleLimitChange"
+        @current-change="handlePageChange"
+        :current-page="page"
+        :page-size="limit"
+        layout="total, prev, pager, next, jumper"
+        :total="total"
+      >
+      </el-pagination>
+    </div>
   </content-component>
 </template>
 
 <script>
 import tagDialog from './tagDialog'
-import api from '@/api/tag'
+import api from 'api/blog/tag'
 import { Message } from 'element-ui'
 import ContentComponent from '@/modules/components/content'
 import EditComponent from 'modules/components/edit-form-dialog'
+import ListComponent from 'modules/components/table-list'
+import TablePageMixins from 'modules/mixins/table-page'
+import { tagConfig } from '@/fields/blog/tag'
 export default {
+  mixins: [TablePageMixins],
   components: {
     tagDialog,
     ContentComponent,
     EditComponent,
+    ListComponent,
   },
   props: {
     id: {},
   },
   data() {
     return {
-      item: [],
-      listLoading: false,
-      search: '',
-      showDialog: false,
-      editItem: {},
-      delVisible: false,
       configs: [
         {
           prop: 'name',
@@ -46,21 +77,23 @@ export default {
           required: true,
         },
       ],
-      params: {},
+      tagConfig,
     }
   },
+  mounted() {
+    this.fetchData()
+  },
   methods: {
-    async getList() {
-      this.listLoading = true
-      let { data } = await api.getTag()
-      if (data.code === 0) {
-        this.item = data.data
-      }
-      this.listLoading = false
+    async getDatas() {
+      return await api.getTag()
     },
     handleEdit(item) {
       this.editItem = { ...item }
       this.showDialog = true
+    },
+    createTag({params, callback}) {
+      console.log(params)
+      callback()
     },
     delTag(item) {
       this.$confirm('确认删除该分类吗？')
@@ -81,15 +114,6 @@ export default {
         })
         .catch(() => {})
     },
-    closeDialog() {
-      this.editItem = {}
-      this.showDialog = false
-    },
-  },
-  created() {
-    // this.id && this.fetch();
-    // this.fetchParents();
-    // this.getList()
   },
 }
 </script>

@@ -21,9 +21,8 @@ export default {
         data.data &&
         Array.isArray(data.data.data)
       ) {
-        data = data.data
-        this.datas = data.data
-        this.total = data.total ? data.total : data.data.length
+        this.datas = data.data.data
+        this.total = data.data.total ? data.data.total : data.data.data.length
       }
       this.loaded()
     },
