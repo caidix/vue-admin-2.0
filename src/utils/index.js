@@ -1,4 +1,3 @@
-
 export function parseTime(time, cFormat) {
   if (arguments.length === 0) {
     return null
@@ -8,10 +7,10 @@ export function parseTime(time, cFormat) {
   if (typeof time === 'object') {
     date = time
   } else {
-    if ((typeof time === 'string') && (/^[0-9]+$/.test(time))) {
+    if (typeof time === 'string' && /^[0-9]+$/.test(time)) {
       time = parseInt(time)
     }
-    if ((typeof time === 'number') && (time.toString().length === 10)) {
+    if (typeof time === 'number' && time.toString().length === 10) {
       time = time * 1000
     }
     date = new Date(time)
@@ -23,12 +22,14 @@ export function parseTime(time, cFormat) {
     h: date.getHours(),
     i: date.getMinutes(),
     s: date.getSeconds(),
-    a: date.getDay()
+    a: date.getDay(),
   }
   const time_str = format.replace(/{([ymdhisa])+}/g, (result, key) => {
     const value = formatObj[key]
     // Note: getDay() returns 0 on Sunday
-    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value] }
+    if (key === 'a') {
+      return ['日', '一', '二', '三', '四', '五', '六'][value]
+    }
     return value.toString().padStart(2, '0')
   })
   return time_str
@@ -88,15 +89,31 @@ export function param2Obj(url) {
   }
   return JSON.parse(
     '{"' +
-    decodeURIComponent(search)
-      .replace(/"/g, '\\"')
-      .replace(/&/g, '","')
-      .replace(/=/g, '":"')
-      .replace(/\+/g, ' ') +
-    '"}'
+      decodeURIComponent(search)
+        .replace(/"/g, '\\"')
+        .replace(/&/g, '","')
+        .replace(/=/g, '":"')
+        .replace(/\+/g, ' ') +
+      '"}'
   )
 }
 
 export function isNil(value) {
   return value == null
+}
+
+export function filterNotInConfigs(configs = [], params = []) {
+  const configKeys = configs.reduce(
+    (propKeys, { prop }) => propKeys.concat(prop),
+    []
+  )
+  Object.keys(params)
+    .filter((key) => {
+      return !configKeys.includes(key)
+    })
+    .forEach((key) => {
+      params[key] = undefined
+      delete params[key]
+    })
+  return params
 }
