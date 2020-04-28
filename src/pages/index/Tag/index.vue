@@ -4,14 +4,15 @@
     <list-component :configs="tagConfig" :datas="datas" border v-loading="isLoading">
       <el-table-column fixed="right" label="操作">
         <template slot-scope="{row}">
-          <edit-component isEdit :configs="editConfig" :editId="row.id" @submit="fetchData" :data="row"></edit-component>
+          <edit-component isEdit :configs="editConfig" :editId="row.id" @submit="fetchData" :data="row">
+          </edit-component>
           <el-button slot="reference" @click="delTag(row)" type="danger" size="small">删除</el-button>
         </template>
       </el-table-column>
     </list-component>
     <div slot="footer" style="text-align:center">
       <el-pagination @size-change="handleLimitChange" @current-change="handlePageChange" :current-page="page"
-        :page-size="limit" layout="total, prev, pager, next, jumper" :total="total">
+        :page-size="limit" :page-sizes="[5, 10, 30, 50]" layout="total, prev, sizes, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
   </content-component>
@@ -55,7 +56,7 @@
             required: true,
           },
         ],
-        tagConfig:JSON.parse(JSON.stringify(tagConfig)),
+        tagConfig: JSON.parse(JSON.stringify(tagConfig)),
         editConfig: JSON.parse(JSON.stringify(editConfig))
       }
     },
@@ -76,7 +77,11 @@
     },
     methods: {
       async getDatas() {
-        return await api.getTag()
+        const params = {
+          limit: this.limit,
+          page: this.page
+        }
+        return await api.getTag(params)
       },
       handleEdit(item) {
         this.editItem = {

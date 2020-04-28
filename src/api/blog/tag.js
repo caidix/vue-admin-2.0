@@ -16,10 +16,11 @@ const editTag = (data, config = {}) => {
   })
 }
 
-const getTag = (data, config = {}) => {
+const getTag = (params, config = {}) => {
   return http.request({
     url: '/admin/tag/list',
-    method: 'get'
+    method: 'get',
+    params
   })
 }
 

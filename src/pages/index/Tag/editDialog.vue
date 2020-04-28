@@ -1,5 +1,5 @@
 <template>
-  <edit-component :data="data" v-bind="$attrs" :configs="editConfig" :btnText="setTitle" @submit="submit">
+  <edit-component isResetParams :data="data" v-bind="$attrs" :configs="editConfig" :btnText="setTitle" @submit="submit">
   </edit-component>
 </template>
 <script>
