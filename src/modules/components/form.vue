@@ -69,10 +69,10 @@
             >
               <el-option v-if="isQuery" value="" label="全部" />
               <el-option
-                v-for="{ id, value } in enums"
-                :key="id"
-                :value="id"
-                :label="value"
+                v-for="{ label, value } in enums"
+                :key="value"
+                :value="value"
+                :label="label"
               />
             </el-select>
             <el-checkbox-group
@@ -82,9 +82,9 @@
               :disabled="disabled || _disabled"
             >
               <el-checkbox
-                v-for="{ id, value } in enums"
-                :key="id"
-                :label="id"
+                v-for="{ label, value } in enums"
+                :key="label"
+                :label="label"
                 :border="border"
                 >{{ value }}</el-checkbox
               >
@@ -97,9 +97,9 @@
               :placeholder="placeholder"
             >
               <el-radio
-                v-for="{ id, value } in enums"
-                :key="id"
-                :label="id"
+                v-for="{ label, value } in enums"
+                :key="label"
+                :label="label"
                 :border="border"
                 >{{ value }}</el-radio
               >
