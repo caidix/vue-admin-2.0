@@ -1,6 +1,6 @@
 import http from '@/utils/http.js'
 
-const addCategory = (params, config = {}) => {
+const addCategory = (params = {}, config = {}) => {
   return http.request({
     url: '/admin/category/add',
     method: 'get',
@@ -8,7 +8,7 @@ const addCategory = (params, config = {}) => {
   })
 }
 
-const editCategory = (data, config = {}) => {
+const editCategory = (data = {}, config = {}) => {
   return http.request({
     url: '/admin/category/edit',
     method: 'post',
@@ -16,14 +16,15 @@ const editCategory = (data, config = {}) => {
   })
 }
 
-const getCategory = (data, config = {}) => {
+const getCategory = (params = {}, config = {}) => {
   return http.request({
     url: '/admin/category/list',
-    method: 'get'
+    method: 'get',
+    params
   })
 }
 
-const delCategory = (params, config = {}) => {
+const delCategory = (params = {}, config = {}) => {
   return http.request({
     url: '/admin/category/del',
     method: 'get',

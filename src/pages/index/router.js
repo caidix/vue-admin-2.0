@@ -64,7 +64,7 @@ export const constantRoutes = [
       {
         path: "index",
         name: "categoryList",
-        component: () => import("@/pages/index/About"),
+        component: () => import("@/pages/index/Category"),
         meta: { title: "分类列表", icon: "el-icon-tickets" },
       },
     ],
@@ -83,6 +83,54 @@ export const constantRoutes = [
       },
     ],
     meta: { title: "标签管理", icon: "el-icon-collection-tag" },
+  },
+  {
+    path: '/gather',
+    redirect: '/index',
+    component: Layout,
+    children: [{
+      path: 'index',
+      component: resolve => require(['@/pages/index/Gather'], resolve),
+      name: 'gather',
+      meta: { title: '归档列表', icon: 'el-icon-s-finance' }
+    }],
+    meta: { title: '文档集合管理', icon: 'el-icon-s-finance' }
+  },
+  {
+    path: '/article',
+    redirect: '/list',
+    component: Layout,
+    children: [{
+      path: 'list',
+      component: resolve => require(['@/pages/index/Article'], resolve),
+      name: 'articleList',
+      meta: { title: '文章列表', noCache: true }
+    }, {
+      path: 'edit',
+      component: resolve => require(['@/pages/index/Article/edit'], resolve),
+      name: 'articleAdd',
+      meta: { title: '添加文章', noCache: true }
+    }, {
+      path: 'edit/:id',
+      component: resolve => require(['@/pages/index/Article/edit'], resolve),
+      name: 'articleEdit',
+      props: true,
+      hidden: true,
+      meta: { title: '文章编辑', }
+    }],
+    meta: { title: '文章管理', icon: 'el-icon-notebook-1' }
+  },
+  {
+    path: '/user',
+    redirect: '/list',
+    component: Layout,
+    children: [{
+      path: 'list',
+      component: resolve => require(['@/pages/index/User'], resolve),
+      name: 'userList',
+      meta: { title: '用户列表', icon: 'el-icon-s-management', noCache: true }
+    }],
+    meta: { title: '用户管理', icon: 'el-icon-user', noCache: true }
   },
   // 404 page must be placed at the end !!!
   { path: "*", redirect: "/404", hidden: true },

@@ -1,10 +1,10 @@
 <template>
   <content-component>
-    <edit-component slot="header" @submit="fetchData" :configs="editConfig"></edit-component>
+    <edit-component slot="header" @submit="fetchData" :configs="editConfig" :datas="datas"></edit-component>
     <list-component :configs="tagConfig" :datas="datas" border v-loading="isLoading">
       <el-table-column fixed="right" label="操作">
         <template slot-scope="{row}">
-          <edit-component isEdit :configs="editConfig" :editId="row.id" @submit="fetchData" :data="row">
+          <edit-component isEdit :datas="datas" :configs="editConfig" :editId="row.id" @submit="fetchData" :data="row">
           </edit-component>
           <el-button slot="reference" @click="delTag(row)" type="danger" size="small">删除</el-button>
         </template>
@@ -12,7 +12,8 @@
     </list-component>
     <div slot="footer" style="text-align:center">
       <el-pagination @size-change="handleLimitChange" @current-change="handlePageChange" :current-page="page"
-        :page-size="limit" :page-sizes="[5, 10, 30, 50]" layout="total, prev, sizes, pager, next, jumper" :total="total">
+        :page-size="limit" :page-sizes="[5, 10, 30, 50]" layout="total, prev, sizes, pager, next, jumper"
+        :total="total">
       </el-pagination>
     </div>
   </content-component>
@@ -44,32 +45,20 @@
     data() {
       return {
         configs: [{
-            prop: 'name',
-            label: '标签名称',
-            type: 'input',
-            required: true,
-          },
-          {
-            prop: 'desc',
-            label: '分类描述',
-            type: 'input',
-            required: true,
-          },
+          prop: 'name',
+          label: '标签名称',
+          type: 'input',
+          required: true,
+        },
+        {
+          prop: 'desc',
+          label: '分类描述',
+          type: 'input',
+          required: true,
+        },
         ],
-        tagConfig: JSON.parse(JSON.stringify(tagConfig)),
-        editConfig: JSON.parse(JSON.stringify(editConfig))
-      }
-    },
-    watch: {
-      datas(val) {
-        const enums = val.map(list => {
-          return {
-            label: list.name,
-            value: list._id
-          }
-        })
-        this.$set(this.tagConfig[3], 'enums', enums)
-        this.$set(this.editConfig[0], 'enums', enums)
+        editConfig: editConfig.getFields(),
+        tagConfig: tagConfig.getFields()
       }
     },
     mounted() {
@@ -110,7 +99,7 @@
               })
             }
           })
-          .catch(() => {})
+          .catch(() => { })
       },
     },
   }
