@@ -112,7 +112,7 @@
                  <el-form-item label-width="120px" prop="img_url" label="文章封面">
                   <el-upload
                       class="avatar-uploader"
-                      :action="'/api/admin/article/upload'"
+                      :action="'/api/admin/upload'"
                       :on-success="upload"
                     >
                       <img v-if="postForm.img_url" :src="postForm.img_url" class="avatar">

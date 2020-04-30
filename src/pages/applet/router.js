@@ -41,6 +41,17 @@ export const constantRoutes = [
       meta: { title: 'Dashboard', icon: 'el-icon-platform-eleme' }
     }]
   },
+  {
+    path: '/classic',
+    component: Layout,
+    redirect: '/index',
+    children: [{
+      path: 'index',
+      name: '每日一句',
+      component: () => import('@/pages/applet/Classic'),
+      meta: { title: '每日一句', icon: 'el-icon-platform-eleme' }
+    }]
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

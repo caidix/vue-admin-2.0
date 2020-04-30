@@ -41,7 +41,7 @@ const findOneArticle = (params) => {
 const uploadImg = (data) => {
   return http.request({
     method: 'post',
-    url: '/admin/article/upload',
+    url: '/admin/upload',
     data,
     headers: { 'Content-Type': 'multipart/form-data' },
   })
