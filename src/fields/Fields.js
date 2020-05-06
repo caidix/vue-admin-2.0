@@ -35,6 +35,8 @@ export class Field {
     enums,
     defaultValue,
     required,
+    isExpand,
+    isImage,
     inputClass
   }) {
     this.id = id
@@ -47,6 +49,8 @@ export class Field {
     this.defaultValue = defaultValue
     this.required = required
     this.inputClass = inputClass
+    this.isExpand = isExpand
+    this.isImage = isImage
     this.showCondition = () => true
   }
   clone() {
@@ -115,7 +119,7 @@ export class Field {
     this.defaultValue = defaultValue;
     return this;
   }
-  resetDefaultValue(defaultValue) {
+  resetDefaultValue() {
     this.defaultValue = undefined;
     delete this.defaultValue;
     return this;
@@ -127,6 +131,24 @@ export class Field {
   resetRequired() {
     this.required = undefined;
     delete this.required;
+    return this;
+  }
+  setIsExpand(isExpand) {
+    this.isExpand = isExpand;
+    return this;
+  }
+  resetIsExpand() {
+    this.isExpand = undefined;
+    delete this.isExpand;
+    return this;
+  }
+  setIsImage(isImage) {
+    this.isImage = isImage;
+    return this;
+  }
+  resetIsEmage() {
+    this.isImage = undefined;
+    delete this.isImage;
     return this;
   }
 }

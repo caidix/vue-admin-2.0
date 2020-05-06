@@ -1,10 +1,10 @@
 <template>
   <content-component>
-    <edit-component slot="header" @submit="fetchData" :configs="editConfig" :datas="datas"></edit-component>
+    <edit-component slot="header" @submit="fetchData" :datas="datas"></edit-component>
     <list-component :configs="tagConfig" :datas="datas" border v-loading="isLoading">
       <el-table-column fixed="right" label="操作">
         <template slot-scope="{row}">
-          <edit-component isEdit :datas="datas" :configs="editConfig" :editId="row.id" @submit="fetchData" :data="row">
+          <edit-component isEdit :datas="datas" :editId="row.id" @submit="fetchData" :data="row">
           </edit-component>
           <el-button slot="reference" @click="delCategory(row)" type="danger" size="small">删除</el-button>
         </template>
@@ -29,8 +29,7 @@
   import ListComponent from 'modules/components/table-list'
   import TablePageMixins from 'modules/mixins/table-page'
   import {
-    tagConfig,
-    editConfig
+    tagConfig
   } from '@/fields/applet/classic'
   export default {
     mixins: [TablePageMixins],
@@ -57,7 +56,6 @@
           required: true,
         },
         ],
-        editConfig: editConfig.getFields(),
         tagConfig: tagConfig.getFields()
       }
     },

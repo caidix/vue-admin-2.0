@@ -1,11 +1,13 @@
 <template>
   <edit-component isResetParams :data="data" v-bind="$attrs" :configs="editConfig" :btnText="setTitle" @submit="submit">
-    <el-input>1312312</el-input>
   </edit-component>
 </template>
 <script>
   import EditComponent from 'modules/components/edit-form-dialog'
   import api from "api/applet/classic";
+    import {
+    editConfig
+  } from '@/fields/applet/classic'
   import {
     Message
   } from "element-ui";
@@ -24,12 +26,6 @@
       editId: {
         type: [Number, String]
       },
-      configs: {
-        type: Array,
-        default() {
-          return []
-        }
-      },
       datas: {
         type: Array,
         default() {
@@ -45,7 +41,7 @@
         return false
       },
       editConfig() {
-        return this.configs;
+        return editConfig.getFields()
       },
       setTitle() {
         return this.isEdit ? "编辑" : "新建分类"

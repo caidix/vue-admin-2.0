@@ -41,8 +41,31 @@ const createTime = new Field({
 const background = new Field({
   prop: "background",
   label: "背景",
-  type: 'upload'
+  type: 'upload',
+  isImage: true
 })
+const isMusic = new Field({
+  prop: "isMusic",
+  label: "是否音链",
+  type:'select',
+  enums: [{
+    label: '是',
+    value: true
+  }, {
+    label: '否',
+    value: false
+  }]
+})
+
+const musicUrl = new Field({
+  prop: 'musicUrl',
+  label: '音乐链接',
+  type: 'input'
+}).setShowCondition((prop) => {
+  console.log(prop)
+  return true
+})
+
 
 export const tagConfig = new Fields([
   id,
@@ -50,7 +73,8 @@ export const tagConfig = new Fields([
   content,
   isShow,
   likes,
-  createTime
+  background,
+  createTime,
 ]).clone()
 
 export const editConfig = new Fields([
@@ -58,4 +82,6 @@ export const editConfig = new Fields([
   message,
   content,
   background,
+  isMusic,
+  musicUrl
 ]).clone()

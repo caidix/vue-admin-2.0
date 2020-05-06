@@ -22,7 +22,7 @@
     props: {
       configs: {
         type: Array,
-        default() {
+        default () {
           return []
         },
       },
