@@ -76,6 +76,10 @@
               <img v-if="params[prop]" :src="params[prop]" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
+            <el-upload v-else-if="type === 'uploadMusic'"
+              :action="'http://localhost:3000/api/applet/classic/upload'" :on-success="uploadFile">
+              <el-button size="small" type="primary">点击上传</el-button>
+            </el-upload>
             <el-input v-else v-model="params[prop]" :class="inputClass" :placeholder="placeholder || `请输入${label}`"
               :disabled="disabled || _disabled" />
           </slot>
@@ -159,6 +163,12 @@
       upload(data) {
         const field = this.configs.find(field => field.type === 'upload')
         this.$set(this.params, field.prop, data.data.url)
+        this.$message('上传成功！');
+      },
+      uploadFile(data) {
+        const field = this.configs.find(field => field.type === 'uploadMusic')
+        this.$set(this.params, field.prop, data.data)
+        this.$message('上传成功！');
       },
       register(configs, params) {
         configs.forEach(({ prop }) => {

@@ -43,7 +43,7 @@
               ...$attrs,
               ...arg,
             }" />
-          <img style="width: 100px;height:100px;" :src="row[prop]" :alt="label" v-else-if="isImage" />
+          <img style="width: 100px;height:100px;" :src="row[prop]" :alt="label" v-else-if="isImage && row[prop]" />
           <span v-else-if="isHtml" v-html="row[prop]"></span>
           <!--使用枚举格式化数组字段信息-->
           <span v-else-if="enums && Array.isArray(row[prop])">
