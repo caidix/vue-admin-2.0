@@ -1,24 +1,6 @@
-# vue-admin
+# vue-admin 2.0
+ > 基于vue, element-ui的博客2.0项目
+ - element-ui组件二次封装
+ - 对字段实现类处理
+ - 多页面配置实现不同项目的后台管理分隔开
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
