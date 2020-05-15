@@ -8,6 +8,14 @@ const createClassic = (params = {}, config = {}) => {
     config
   })
 }
+const updateClassic = (params = {}, config = {}) => {
+  return http.request({
+    method: 'get',
+    url: '/applet/classic/update',
+    params,
+    config
+  })
+}
 const queryClassic = (params = {}, config = {}) => {
   return http.request({
     method: 'get',
@@ -19,5 +27,6 @@ const queryClassic = (params = {}, config = {}) => {
 
 export default {
   createClassic,
-  queryClassic
+  queryClassic,
+  updateClassic
 }

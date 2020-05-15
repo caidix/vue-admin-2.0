@@ -167,7 +167,7 @@
       },
       uploadFile(data) {
         const field = this.configs.find(field => field.type === 'uploadMusic')
-        this.$set(this.params, field.prop, data.data)
+        this.$set(this.params, field.prop, data.data.data)
         this.$message('上传成功！');
       },
       register(configs, params) {

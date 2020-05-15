@@ -10,8 +10,8 @@ const getUserList = (data) => {
 
 const login = (data) => {
   return http.request({
-    method: 'post',
-    url: '/user/login',
+    method: 'POST',
+    url: '/auth/login',
     data
   })
 }
@@ -27,7 +27,7 @@ const list = (data) => {
 const register = (data) => {
   return http.request({
     method: 'post',
-    url: '/user/register',
+    url: '/auth/register',
     data
   })
 }
@@ -42,8 +42,8 @@ const delUser = (data) => {
 
 const findOne = (data) => {
   return http.request({
-    method: 'post',
-    url: '/user/findOne',
+    method: 'get',
+    url: '/auth/user',
     data
   })
 }

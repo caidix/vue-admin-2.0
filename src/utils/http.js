@@ -12,9 +12,9 @@ const errorMsg = (message) => {
 };
 const http = axios.create({
   // baseURL: process.env.VUE_ADMIN_API_URL|| '/api',
-  baseURL: "http://localhost:3000/api",
+  baseURL: process.env.API_URL || "http://localhost:3004",
   timeout: 5000,
-  withCredentials: true,
+  // withCredentials: true,
   header: { "Access-Control-Allow-Origin": "*" },
 });
 http.interceptors.request.use(
@@ -34,15 +34,20 @@ http.interceptors.response.use(
   },
   (error) => {
     let { message } = error;
+    const { status, data } = error.response;
     console.log("err" + error); // for debug
     if (message == "Network Error") {
       message = "后端接口连接异常";
     }
-    if (message.includes("timeout")) {
+    else if (message.includes("timeout")) {
       message = "后端接口请求超时";
     }
-    if (message.includes("Request failed with status code")) {
-      message = "后端接口" + message.substr(message.length - 3) + "异常";
+    else if (message.includes("Request failed with status code")) {
+      if (data && data.message) {
+        message = data.message
+      } else {
+        message = "后端接口" + message.substr(message.length - 3) + "异常";
+      }
     }
     errorMsg(message || "未知错误");
     return Promise.reject(error);

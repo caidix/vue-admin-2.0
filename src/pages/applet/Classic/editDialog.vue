@@ -49,7 +49,7 @@
     },
     methods: {
       submit(item) {
-        this.isEdit ? this.editCategory(item) : this.createClassic(item);
+        this.isEdit ? this.updateClassic(item) : this.createClassic(item);
       },
       async createClassic(item) {
         let {
@@ -71,14 +71,14 @@
         }
         item.callback()
       },
-      async editCategory(item) {
+      async updateClassic(item) {
         let params = {
           ...item.params,
           id: this.editId
         };
         let {
           data
-        } = await api.editCategory(params);
+        } = await api.updateClassic(params);
         if (data.code === 0) {
           Message({
             message: data.message || "修改成功",

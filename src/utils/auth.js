@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 const TokenKey = 'cd-admin-vue'
 
 export function getToken() {
-  return Cookies.get(TokenKey)
+  return Cookies.get(TokenKey) ? 'Bearer ' + Cookies.get(TokenKey) : ''
 }
 
 export function setToken(token) {
