@@ -19,9 +19,9 @@ export default {
         this.updateParams();
       },
     },
-    params: function(data) {
-      console.log(data);
-    },
+    // params: function(data) {
+    //   console.log(data);
+    // },
   },
   mounted() {
     this.updateParams();

@@ -4,7 +4,7 @@
     <list-component :configs="tagConfig" :datas="datas" border v-loading="isLoading">
       <el-table-column fixed="right" label="操作">
         <template slot-scope="{row}">
-          <edit-component isEdit :datas="datas" :configs="editConfig" :editId="row.id" @submit="fetchData" :data="row">
+          <edit-component isEdit :datas="datas" :configs="editConfig" :editId="row._id" @submit="fetchData" :data="row">
           </edit-component>
           <el-button slot="reference" @click="delTag(row)" type="danger" size="small">删除</el-button>
         </template>
@@ -70,15 +70,13 @@
           .then(async () => {
             const {
               data
-            } = await api.delTag({
-              id: item.id
-            })
+            } = await api.delTag(item._id)
             if (data.code === 0) {
               Message({
                 message: data.message || '删除成功',
                 type: 'success',
               })
-              this.getList()
+              this.fetchData()
             } else {
               Message({
                 message: data.message || '删除失败',

@@ -82,13 +82,11 @@
         }
       },
       async editTag(item) {
-        let params = {
-          ...item.params,
-          id: this.editId
-        };
         let {
           data
-        } = await api.editTag(params);
+        } = await api.editTag(this.editId, {
+          ...item.params
+        });
         if (data.code === 0) {
           Message({
             message: data.message || "修改成功",

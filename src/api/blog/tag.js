@@ -1,40 +1,41 @@
-import http from '@/utils/http.js'
+import http from "@/utils/http.js";
 
 const addTag = (data, config = {}) => {
   return http.request({
-    url: '/admin/tags',
-    method: 'post',
-    data
-  })
-}
+    url: "/admin/tags",
+    method: "post",
+    data,
+  });
+};
 
-const editTag = (data, config = {}) => {
+const editTag = (id, data, config = {}) => {
   return http.request({
-    url: '/admin/tag/edit',
-    method: 'post',
-    data
-  })
-}
+    url: `/admin/tags/${id}`,
+    method: "put",
+    data,
+    config
+  });
+};
 
 const getTag = (params, config = {}) => {
   return http.request({
-    url: '/admin/tags',
-    method: 'get',
-    params
-  })
-}
+    url: "/admin/tags",
+    method: "get",
+    params,
+  });
+};
 
-const delTag = (params, config = {}) => {
+const delTag = (id, config = {}) => {
   return http.request({
-    url: '/admin/tag/del',
-    method: 'get',
-    params
-  })
-}
+    url: `/admin/tags/${id}`,
+    method: "delete",
+    config
+  });
+};
 
 export default {
   getTag,
   addTag,
   editTag,
-  delTag
-}
+  delTag,
+};
