@@ -15,6 +15,7 @@ export default {
     async fetchData() {
       this.loading()
       let { data } = await this.getDatas()
+      console.log(data)
       if (
         data &&
         data.code === 0 &&

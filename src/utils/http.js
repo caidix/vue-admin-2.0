@@ -12,7 +12,7 @@ const errorMsg = (message) => {
 };
 const http = axios.create({
   // baseURL: process.env.VUE_ADMIN_API_URL|| '/api',
-  baseURL: process.env.API_URL || "http://localhost:3004",
+  baseURL: process.env.API_URL || "http://localhost:3004/api",
   timeout: 5000,
   // withCredentials: true,
   header: { "Access-Control-Allow-Origin": "*" },

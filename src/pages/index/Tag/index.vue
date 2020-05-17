@@ -44,19 +44,6 @@
     },
     data() {
       return {
-        configs: [{
-          prop: 'name',
-          label: '标签名称',
-          type: 'input',
-          required: true,
-        },
-        {
-          prop: 'desc',
-          label: '分类描述',
-          type: 'input',
-          required: true,
-        },
-        ],
         editConfig: editConfig.getFields(),
         tagConfig: tagConfig.getFields()
       }

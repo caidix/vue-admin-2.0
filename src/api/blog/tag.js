@@ -1,10 +1,10 @@
 import http from '@/utils/http.js'
 
-const addTag = (params, config = {}) => {
+const addTag = (data, config = {}) => {
   return http.request({
-    url: '/admin/tag/add',
-    method: 'get',
-    params
+    url: '/admin/tags',
+    method: 'post',
+    data
   })
 }
 
@@ -18,7 +18,7 @@ const editTag = (data, config = {}) => {
 
 const getTag = (params, config = {}) => {
   return http.request({
-    url: '/admin/tag/list',
+    url: '/admin/tags',
     method: 'get',
     params
   })

@@ -2,7 +2,7 @@ import http from '@/utils/http.js'
 const getArticle = (params) => {
   return http.request({
     method: "get",
-    url: "/admin/article/list",
+    url: "/admin/articles",
     params
   })
 }
@@ -10,22 +10,22 @@ const getArticle = (params) => {
 const delArticle = (id) => {
   return http.request({
     method: "delete",
-    url: `/admin/article/delOne/${id}`
+    url: `/admin/articles/${id}`
   })
 }
 
 const addArticle = (data) => {
   return http.request({
     method: "post",
-    url: `/admin/article/add`,
+    url: `/admin/articles`,
     data
   })
 }
 
 const editArticle = (data) => {
   return http.request({
-    method: "post",
-    url: `/admin/article/edit`,
+    method: "get",
+    url: `/admin/articles/find`,
     data
   })
 }
@@ -33,7 +33,7 @@ const editArticle = (data) => {
 const findOneArticle = (params) => {
   return http.request({
     method: 'get',
-    url: '/admin/article/findOne',
+    url: '/admin/articles/find',
     params
   })
 }

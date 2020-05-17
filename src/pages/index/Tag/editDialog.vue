@@ -25,13 +25,13 @@
       },
       configs: {
         type: Array,
-        default() {
+        default () {
           return []
         }
       },
       datas: {
         type: Array,
-        default() {
+        default () {
           return []
         }
       }
@@ -73,13 +73,13 @@
             type: "success"
           });
           this.$emit("submit");
+          item.callback()
         } else {
           Message({
             message: data.message || "添加失败",
             type: "error"
           });
         }
-        item.callback()
       },
       async editTag(item) {
         let params = {

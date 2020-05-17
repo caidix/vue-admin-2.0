@@ -41,11 +41,11 @@ const actions = {
   getUserInfo: ({ commit, state }) => {
     return api.findOne().then(({ data }) => {
       console.log(data)
-      if (data) {
+      if (data.code === 0) {
         console.log(data)
-        commit('SET_USERNAME', data.username);
-        commit('SET_AVATAR', data.avatar || '');
-        commit('SET_INTRODUCTION', data.introduce || '');
+        commit('SET_USERNAME', data.data.username);
+        commit('SET_AVATAR', data.data.avatar || '');
+        commit('SET_INTRODUCTION', data.data.introduce || '');
       }
       return data;
     })
