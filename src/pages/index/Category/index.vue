@@ -4,9 +4,9 @@
     <list-component :configs="tagConfig" :datas="datas" border v-loading="isLoading">
       <el-table-column fixed="right" label="操作">
         <template slot-scope="{row}">
-          <edit-component isEdit :datas="datas" :configs="editConfig" :editId="row.id" @submit="fetchData" :data="row">
+          <edit-component isEdit :datas="datas" :configs="editConfig" :editId="row._id" @submit="fetchData" :data="row">
           </edit-component>
-          <el-button slot="reference" @click="delCategory(row)" type="danger" size="small">删除</el-button>
+          <el-button slot="reference" @click="delCategories(row)" type="danger" size="small">删除</el-button>
         </template>
       </el-table-column>
     </list-component>
@@ -44,19 +44,6 @@
     },
     data() {
       return {
-        configs: [{
-          prop: 'name',
-          label: '标签名称',
-          type: 'input',
-          required: true,
-        },
-        {
-          prop: 'desc',
-          label: '分类描述',
-          type: 'input',
-          required: true,
-        },
-        ],
         editConfig: editConfig.getFields(),
         tagConfig: tagConfig.getFields()
       }
@@ -70,7 +57,7 @@
           limit: this.limit,
           page: this.page
         }
-        return await api.getCategory(params)
+        return await api.getCategories(params)
       },
       handleEdit(item) {
         this.editItem = {
@@ -78,20 +65,18 @@
         }
         this.showDialog = true
       },
-      delCategory(item) {
+      delCategories(item) {
         this.$confirm('确认删除该分类吗？')
           .then(async () => {
             const {
               data
-            } = await api.delCategory({
-              id: item.id
-            })
+            } = await api.delCategories(item._id)
             if (data.code === 0) {
               Message({
                 message: data.message || '删除成功',
                 type: 'success',
               })
-              this.getList()
+              this.fetchData()
             } else {
               Message({
                 message: data.message || '删除失败',

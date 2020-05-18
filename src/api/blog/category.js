@@ -1,40 +1,41 @@
-import http from '@/utils/http.js'
+import http from "@/utils/http.js";
 
-const addCategory = (params = {}, config = {}) => {
+const addCategories = (data, config = {}) => {
   return http.request({
-    url: '/admin/category/add',
-    method: 'get',
-    params
-  })
-}
+    url: "/admin/categories",
+    method: "post",
+    data,
+  });
+};
 
-const editCategory = (data = {}, config = {}) => {
+const editCategories = (id, data, config = {}) => {
   return http.request({
-    url: '/admin/category/edit',
-    method: 'post',
-    data
-  })
-}
+    url: `/admin/categories/${id}`,
+    method: "put",
+    data,
+    config
+  });
+};
 
-const getCategory = (params = {}, config = {}) => {
+const getCategories = (params, config = {}) => {
   return http.request({
-    url: '/admin/category/list',
-    method: 'get',
-    params
-  })
-}
+    url: "/admin/categories",
+    method: "get",
+    params,
+  });
+};
 
-const delCategory = (params = {}, config = {}) => {
+const delCategories = (id, config = {}) => {
   return http.request({
-    url: '/admin/category/del',
-    method: 'get',
-    params
-  })
-}
+    url: `/admin/categories/${id}`,
+    method: "delete",
+    config
+  });
+};
 
 export default {
-  getCategory,
-  addCategory,
-  editCategory,
-  delCategory
-}
+  getCategories,
+  addCategories,
+  editCategories,
+  delCategories
+};

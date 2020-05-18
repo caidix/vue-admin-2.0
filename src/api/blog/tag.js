@@ -37,5 +37,5 @@ export default {
   getTag,
   addTag,
   editTag,
-  delTag,
+  delTag
 };

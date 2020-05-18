@@ -44,13 +44,6 @@
         return false
       },
       editConfig() {
-        const enums = this.datas.map(list => {
-          return {
-            label: list.name,
-            value: list._id
-          }
-        })
-        this.configs.find(field => field.prop === 'parent').setEnums(enums)
         return this.configs;
       },
       setTitle() {

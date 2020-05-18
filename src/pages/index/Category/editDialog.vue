@@ -1,6 +1,5 @@
 <template>
   <edit-component isResetParams :data="data" v-bind="$attrs" :configs="editConfig" :btnText="setTitle" @submit="submit">
-    <el-input>1312312</el-input>
   </edit-component>
 </template>
 <script>
@@ -26,13 +25,13 @@
       },
       configs: {
         type: Array,
-        default() {
+        default () {
           return []
         }
       },
       datas: {
         type: Array,
-        default() {
+        default () {
           return []
         }
       }
@@ -45,13 +44,6 @@
         return false
       },
       editConfig() {
-        const enums = this.datas.map(list => {
-          return {
-            label: list.name,
-            value: list._id
-          }
-        })
-        this.configs.find(field => field.prop === 'parent').setEnums(enums)
         return this.configs;
       },
       setTitle() {
@@ -60,12 +52,12 @@
     },
     methods: {
       submit(item) {
-        this.isEdit ? this.editCategory(item) : this.addCategory(item);
+        this.isEdit ? this.editCategories(item) : this.addCategories(item);
       },
-      async addCategory(item) {
+      async addCategories(item) {
         let {
           data
-        } = await api.addCategory({
+        } = await api.addCategories({
           ...item.params
         });
         if (data.code === 0) {
@@ -74,22 +66,20 @@
             type: "success"
           });
           this.$emit("submit");
+          item.callback()
         } else {
           Message({
             message: data.message || "添加失败",
             type: "error"
           });
         }
-        item.callback()
       },
-      async editCategory(item) {
-        let params = {
-          ...item.params,
-          id: this.editId
-        };
+      async editCategories(item) {
         let {
           data
-        } = await api.editCategory(params);
+        } = await api.editCategories(this.editId, {
+          ...item.params
+        });
         if (data.code === 0) {
           Message({
             message: data.message || "修改成功",

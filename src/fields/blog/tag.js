@@ -13,11 +13,6 @@ const desc = new Field({
   width: "300",
   type: "input"
 })
-const parent = new Field({
-  prop: "parent",
-  label: "上级标签",
-  type: "select",
-})
 const update_time = new Field({
   prop: "updatedAt",
   label: "修改日期",
@@ -30,13 +25,11 @@ const create_time = new Field({
 export const tagConfig = new Fields([
   name,
   desc,
-  parent,
   update_time,
   create_time
 ]).clone()
 
 export const editConfig = new Fields([
-  parent,
   name,
   desc,
 ]).clone()

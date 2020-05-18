@@ -23,6 +23,7 @@ exports = module.exports = (fileName, module) => {
   const pattern = path.join(module, fileName);  // pattern = **/**/entry.js 相对入口
   const modules = getFullNamespace(resolve.getEntry(), pattern);  // (xxx/src/pages, **/**/entry.js)
   const modulesNotFound = Object.keys(modules).length === 0;
+  console.log('process:' + process.argv.slice(3))
   if (modulesNotFound) {
     const fullPath = path.join(resolve.getEntry(), pattern);
     throw new Error(`module not found about ${fullPath}`);

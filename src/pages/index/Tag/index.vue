@@ -66,7 +66,7 @@
         this.showDialog = true
       },
       delTag(item) {
-        this.$confirm('确认删除该分类吗？')
+        this.$confirm('确认删除该标签吗？')
           .then(async () => {
             const {
               data
