@@ -100,7 +100,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label-width="120px" prop="tags" label="归档">
+                <el-form-item label-width="120px" prop="gather" label="归档">
                   <el-select v-model="postForm.gather" placeholder="请选择归档分类">
                     <template v-for="(item, index) in gatherList">
                       <el-option :label="item.name" :value="item._id" :key="index"></el-option>
@@ -238,19 +238,19 @@ export default {
       this.loading = false;
     },
     async getCategory() {
-      let { data } = await cat.getCategory();
+      let { data } = await cat.getCategories({all: true});
       if (data.code === 0) {
         this.categoryList = data.data.data;
       }
     },
     async getGather() {
-      let { data } = await gat.getGather();
+      let { data } = await gat.getGather({all: true});
       if (data.code === 0) {
-        this.gatherList = data.data;
+        this.gatherList = data.data.data;
       }
     },
     async getTag() {
-      let { data } = await tag.getTag();
+      let { data } = await tag.getTag({all: true});
       if (data.code === 0) {
         this.tagList = data.data.data;
       }

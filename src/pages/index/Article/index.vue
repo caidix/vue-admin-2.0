@@ -91,13 +91,14 @@
     },
     methods: {
       async querySearch(queryString, cb) {
+        if (!queryString) return;
         let {
           data
         } = await api.fuzzySearch({
           title: queryString
         });
         if (data.code === 0) {
-          let res = data.data.reduce((prev, next) => {
+          let res = data.data.data.reduce((prev, next) => {
             prev.push({
               value: next.title,
               _id: next._id

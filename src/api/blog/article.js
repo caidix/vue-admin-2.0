@@ -38,6 +38,15 @@ const findOneArticle = (params) => {
   })
 }
 
+const fuzzySearch = (params) => {
+  return http.request({
+    method: 'get',
+    url: '/admin/articles/fuzzySearch',
+    params,
+    headers: { 'Content-Type': 'multipart/form-data' },
+  })
+}
+
 const uploadImg = (data) => {
   return http.request({
     method: 'post',
@@ -53,5 +62,6 @@ export default {
   editArticle,
   findOneArticle,
   addArticle,
-  uploadImg
+  uploadImg,
+  fuzzySearch
 }
