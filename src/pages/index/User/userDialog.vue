@@ -1,13 +1,7 @@
 <template>
   <div>
-    <el-dialog title="提示" :before-close="beforeClose" :visible.sync="visible" width="50%">
-      <el-form
-        :model="userForm"
-        status-icon
-        ref="userForm"
-        label-width="100px"
-        class="demo-userForm"
-      >
+    <el-dialog :title="isEdit?'编辑用户':'创建用户'" @closed="closed" :visible.sync="visible" width="50%">
+      <el-form :model="userForm" status-icon ref="userForm" label-width="100px" class="demo-userForm">
         <el-form-item label="用户名" prop="username">
           <el-input type="text" v-model="userForm.username" autocomplete="off"></el-input>
         </el-form-item>
@@ -37,72 +31,80 @@
   </div>
 </template>
 <script>
-import api from "api/user.js";
-export default {
-  data() {
-    return {
-      userForm: {
-        password: "",
-        username: "",
-        introduce: "",
-        type: 0,
-        phone: ""
-      },
-      visible: this.show
-    };
-  },
-  props: {
-    show: {
-      type: Boolean,
-      default: false
-    }
-  },
-  watch: {
-    show() {
-      this.visible = this.show;
-    }
-  },
-  methods: {
-    beforeClose() {
-      this.userForm = {
-        password: "",
-        username: "",
-        introduce: "",
-        type: 0,
-        phone: ""
+  import api from "api/user.js";
+  export default {
+    data() {
+      return {
+        userForm: {
+          password: "",
+          username: "",
+          introduce: "",
+          type: 0,
+          phone: ""
+        },
+        visible: this.show
       };
-      this.$emit("update:show", false);
     },
-    handleClose(done) {
-      this.$emit("update:show", false);
+    props: {
+      show: Boolean,
+      isEdit: Boolean,
+      editForm: {
+        type: Object,
+        default: () => ({})
+      }
     },
-    async submit() {
-      let params = { ...this.userForm };
-      if (!params.username) {
+    watch: {
+      show() {
+        this.visible = this.show;
+      },
+      isEdit(val) {
+        if (val) {
+          this.userForm = {
+            ...this.editForm
+          }
+        }
+      }
+    },
+    methods: {
+      closed() {
+        this.userForm = {};
+        this.$emit("update:show", false);
+        this.$emit("update:isEdit", false);
+      },
+      handleClose(done) {
+        this.$emit("update:show", false);
+      },
+      async submit() {
+        let params = {
+          ...this.userForm
+        };
+        if (!params.username) {
+          this.$message({
+            type: "error",
+            message: "必须填写用户名!"
+          });
+          return;
+        }
+        if (!params.password) {
+          this.$message({
+            type: "error",
+            message: "必须填写密码!"
+          });
+          return;
+        }
+        if (params.phone) {
+          params.phone = "86" + params.phone;
+        }
+        let {
+          data
+        } = this.isEdit ? await api.editUser(this.editForm._id, params) : await api.register(params);
         this.$message({
-          type: "error",
-          message: "必须填写用户名!"
+          type: data.code === 0 ? "success" : "error",
+          message: data.message
         });
-        return;
+        data.code === 0 && this.$emit("add-success");
+        this.$emit("update:show", false);
       }
-      if (!params.password) {
-        this.$message({
-          type: "error",
-          message: "必须填写密码!"
-        });
-        return;
-      }
-      if (params.phone) {
-        params.phone = "86" + params.phone;
-      }
-      let { data } = await api.register(params);
-      this.$message({
-        type: data.code === 0 ? "success" : "error",
-        message: data.message
-      });
-      data.code === 0 && this.$emit("add-success");
-      this.$emit("update:show", false);
     }
-  }
-};
+  };
 </script>

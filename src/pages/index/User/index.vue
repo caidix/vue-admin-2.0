@@ -20,88 +20,107 @@
       </el-table-column>
       <el-table-column fixed="right" width="250" label="操作">
         <template slot-scope="scope">
-          <el-button
-            type="primary"
-            size="small"
-            @click="$router.push(`/admin_users/edit/${scope.row._id}`)"
-            plain
-          >编辑</el-button>
+          <el-button type="primary" size="small" @click="edit(scope.row)" plain>编辑
+          </el-button>
           <el-button @click="handleDel(scope.row)" type="danger" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <UserDialog :show.sync="dialogShow" @add-success="fetch" />
+    <el-pagination @size-change="handleLimitChange" @current-change="handlePageChange" :current-page="page"
+      :page-size="limit" :page-sizes="[5, 10, 30, 50]" layout="total, prev, sizes, pager, next, jumper" :total="total">
+    </el-pagination>
+    <UserDialog :show.sync="dialogShow" @add-success="fetch" :is-edit.sync="isEdit" :edit-form="editForm" />
   </div>
 </template>
 
 <script>
-import api from "api/user.js";
-import UserDialog from "./userDialog";
-export default {
-  components: {
-    UserDialog
-  },
-  data() {
-    return {
-      item: [],
-      listLoading: false,
-      dialogShow: false
-    };
-  },
-  filters: {
-    typeMeanFilter(value) {
-      const typeMap = ["普通用户", "管理员"];
-      return typeMap[value];
+  import api from "api/user.js";
+  import UserDialog from "./userDialog";
+  import TablePageMixins from 'modules/mixins/table-page'
+  export default {
+    mixins: [TablePageMixins],
+    components: {
+      UserDialog
     },
-    typeFilter(value) {
-      const typeMap = ["info", "success"];
-      return typeMap[value];
-    }
-  },
-  methods: {
-    handleEdit() {
-      this.dialogShow = true;
+    filters: {
+      typeMeanFilter(value) {
+        const typeMap = ["普通用户", "管理员"];
+        return typeMap[value];
+      },
+      typeFilter(value) {
+        const typeMap = ["info", "success"];
+        return typeMap[value];
+      }
     },
-    async fetch() {
-      this.listLoading = true;
-      let { data } = await api.getUserList();
-      if (data.code === 0) {
-        this.item = data.data;
-        this.$message({
-          type: "success",
-          message: data.message
+    data() {
+      return {
+        item: [],
+        listLoading: false,
+        dialogShow: false,
+        isEdit: false,
+        editForm: {}
+      };
+    },
+    mounted() {
+      this.fetch();
+    },
+    methods: {
+      handleEdit() {
+        this.isEdit = false;
+        this.dialogShow = true;
+      },
+      edit(value) {
+        this.isEdit = true;
+        this.editForm = {
+          ...value
+        };
+        this.dialogShow = true;
+      },
+      async fetch() {
+        this.listLoading = true;
+        let {
+          data
+        } = await api.list({
+          limit: this.limit,
+          page: this.page
         });
-      } else {
-        this.$message({
-          type: "error",
-          message: "获取列表失败!"
+        if (data.code === 0) {
+          this.item = data.data.data;
+          this.total = data.data.total;
+          this.$message({
+            type: "success",
+            message: data.message
+          });
+        } else {
+          this.$message({
+            type: "error",
+            message: "获取列表失败!"
+          });
+        }
+        this.listLoading = false;
+      },
+      handleDel(row) {
+        this.$confirm(`是否删除?`, "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(async () => {
+          let {
+            data
+          } = await api.delUser(row._id);
+          this.$message({
+            type: data.code === 0 ? "success" : "error",
+            message: data.message
+          });
+          this.fetch();
         });
       }
-      this.listLoading = false;
     },
-    handleDel(row) {
-      this.$confirm(`是否删除?`, "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(async () => {
-        let { data } = await api.delUser({ id: row._id });
-        this.$message({
-          type: data.code === 0 ? "success" : "error",
-          message: data.message
-        });
-        this.fetch();
-      });
-    }
-  },
-  mounted() {
-    this.fetch();
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-.filter-container {
-  margin: 20px 0;
-}
+  .filter-container {
+    margin: 20px 0;
+  }
 </style>

@@ -1,12 +1,13 @@
 import http from '@/utils/http.js'
 
-const getUserList = (data) => {
+const editUser = (id, data, config = {}) => {
   return http.request({
-    method: 'post',
-    url: '/user/userList',
-    data
-  })
-}
+    url: `/users/${id}`,
+    method: "put",
+    data,
+    config
+  });
+};
 
 const login = (data) => {
   return http.request({
@@ -16,29 +17,30 @@ const login = (data) => {
   })
 }
 
-const list = (data) => {
+const list = (params = {}) => {
   return http.request({
     method: 'get',
-    url: '/user/list',
-    data
+    url: '/users',
+    params
   })
 }
 
 const register = (data) => {
   return http.request({
     method: 'post',
-    url: '/auth/register',
+    url: '/users/register',
     data
   })
 }
 
-const delUser = (data) => {
+
+const delUser = (id, config = {}) => {
   return http.request({
-    method: 'post',
-    url: '/user/delUser',
-    data
-  })
-}
+    url: `/users/${id}`,
+    method: "delete",
+    config
+  });
+};
 
 const findOne = (data) => {
   return http.request({
@@ -49,7 +51,7 @@ const findOne = (data) => {
 }
 
 export default {
-  getUserList,
+  editUser,
   login,
   register,
   list,
