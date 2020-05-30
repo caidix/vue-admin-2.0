@@ -112,7 +112,7 @@
                  <el-form-item label-width="120px" prop="img_url" label="文章封面">
                   <el-upload
                       class="avatar-uploader"
-                      :action="'/api/admin/upload'"
+                      :action="'http://localhost:3004/api/admin/upload'"
                       :on-success="upload"
                     >
                       <img v-if="postForm.img_url" :src="postForm.img_url" class="avatar">
@@ -152,10 +152,10 @@ export default {
   computed: {
     displayTime: {
       get() {
-        return +new Date(this.postForm.addTime);
+        return +new Date(this.postForm.createdAt);
       },
       set(val) {
-        this.postForm.addTime = new Date(val);
+        this.postForm.createdAt = new Date(val);
       }
     }
   },
@@ -174,7 +174,7 @@ export default {
     };
     return {
       postForm: {
-        addTime: new Date(),
+        createdAt: new Date(),
         keyword: "",
         author: "",
         title: "",
@@ -209,7 +209,7 @@ export default {
   },
   methods: {
     upload(data){
-      this.$set(this.postForm, 'img_url', data.data.url)
+      this.$set(this.postForm, 'img_url', data.url)
     },
     async fetch() {
       this.loading = true;
@@ -221,16 +221,15 @@ export default {
           duration: 2000
         });
         data = data.data;
-        let category = data.category.map(val => val._id);
         this.postForm = {
           title: data.title,
-          category,
+          category:data.category,
           origin: data.origin,
           author: data.author,
           introduction: data.introduction,
           draft: data.draft,
           keyword: data.keyword,
-          addTime: data.addTime,
+          createdAt: data.createdAt,
           tags:data.tags
         };
         this.content = data.articleContent.content;
@@ -268,12 +267,9 @@ export default {
           }
           let params = Object.assign({}, this.postForm);
           params.articleContent = articleContent;
-          if (this.id) {
-            params._id = this.id;
-          }
           this.loading = true;
           let { data } = this.id
-            ? await api.editArticle(params)
+            ? await api.editArticle(this.id, params)
             : await api.addArticle(params);
           if (data.code === 0) {
             this.$message({

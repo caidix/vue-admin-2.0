@@ -22,12 +22,13 @@ const addArticle = (data) => {
   })
 }
 
-const editArticle = (data) => {
+const editArticle = (id, data, config = {}) => {
   return http.request({
-    method: "get",
-    url: `/admin/articles/find`,
-    data
-  })
+    url: `/admin/articles/${id}`,
+    method: "put",
+    data,
+    config
+  });
 }
 
 const findOneArticle = (params) => {
