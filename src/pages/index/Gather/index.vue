@@ -57,7 +57,7 @@
         }
         return await api.getGather(params)
       },
-      handleEdit(item) {
+      handleEdit(item = {}) {
         this.editItem = {
           ...item
         };

@@ -230,7 +230,8 @@ export default {
           draft: data.draft,
           keyword: data.keyword,
           createdAt: data.createdAt,
-          tags:data.tags
+          tags:data.tags,
+          img_url: data.img_url
         };
         this.content = data.articleContent.content;
       }

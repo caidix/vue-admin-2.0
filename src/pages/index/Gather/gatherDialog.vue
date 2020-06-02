@@ -107,13 +107,9 @@
         }
       },
       async editGather() {
-        let params = {
-          ...this.model,
-          id: this.item.id
-        };
         let {
           data
-        } = await api.editGather(params);
+        } = await api.editGather(this.item.id, this.model);
         if (data.code === 0) {
           Message({
             message: data.message || "修改成功",
