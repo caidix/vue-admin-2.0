@@ -7,8 +7,8 @@
     <list-component :configs="config" :datas="datas" border v-loading="isLoading">
       <el-table-column fixed="right" label="操作">
         <template slot-scope="{row}">
-          <el-button type="primary" size="small" @click="handleEdit(scope.row)">编辑</el-button>
-          <el-button slot="reference" @click="delTag(scope.row)" type="danger" size="small">删除</el-button>
+          <el-button type="primary" size="small" @click="handleEdit(row)">编辑</el-button>
+          <el-button slot="reference" @click="delTag(row)" type="danger" size="small">删除</el-button>
         </template>
       </el-table-column>
     </list-component>
