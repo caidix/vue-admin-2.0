@@ -9,7 +9,7 @@
         <el-input v-model="model.desc"></el-input>
       </el-form-item>
       <el-form-item label-width="120px" prop="img_url" label="文章封面">
-        <el-upload class="avatar-uploader" action="http://localhost:3004/api/admin/upload" :on-success="upload">
+        <el-upload class="avatar-uploader" action="/api/admin/upload" :on-success="upload">
           <img v-if="model.img" :src="model.img" class="avatar" />
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>

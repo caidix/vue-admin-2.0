@@ -1,6 +1,5 @@
 const env = require('../env/env')
 const getModule = require('../env/get-modules');
-console.log(getModule(env.getEntry(), env.getModule()))
 const modules = getModule(env.getEntry(), env.getModule())
 let pages = {}
 Object.keys(modules).forEach(fileName => {
